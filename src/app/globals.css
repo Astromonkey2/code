@@ -5,14 +5,24 @@
 
 @layer base {
   html { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
-  body { @apply bg-dark text-light font-sans min-h-screen; }
+  body { @apply bg-gradient-to-br from-russian_violet to-indigo text-pale_dogwood font-sans min-h-screen; }
   h1 { @apply text-5xl lg:text-7xl font-bold; }
   p  { @apply mb-4; }
   a  { @apply text-brand hover:underline; }
 }
 
 @layer components {
-  .search-input { @apply w-full px-6 py-4 rounded-pill bg-light text-dark placeholder-gray-500 border-transparent focus:ring-brand-light shadow-lg; }
-  .btn-primary    { @apply px-8 py-4 bg-brand text-light rounded-pill shadow-glow hover:bg-brand-dark; }
+  .search-input { @apply w-full px-6 py-4 rounded-pill bg-pale_dogwood/10 backdrop-blur-sm text-light placeholder-gray-400 border-transparent focus:ring-brand-light shadow-lg; }
+  .btn-primary    { @apply px-8 py-4 bg-brand text-light rounded-pill shadow-md hover:shadow-glow hover:scale-105 transform transition-transform duration-150 ease-in-out; }
   .card           { @apply bg-mid/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-6 shadow-card hover:shadow-glow; }
+}
+
+@layer utilities {
+  @keyframes floatFade {
+    0%, 100% { opacity: 0; transform: translateY(0px); }
+    50% { opacity: 0.3; transform: translateY(-10px); } /* Subtle float and fade */
+  }
+  .animate-float-fade {
+    animation: floatFade linear infinite;
+  }
 }

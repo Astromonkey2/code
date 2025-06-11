@@ -5,19 +5,39 @@ import AnimatedBackground from '@/components/AnimatedBackground';
 import HeroTitle from '@/components/HeroTitle';
 import HeroSearch from '@/components/HeroSearch';
 import SearchContent from '@/components/SearchContent';
-import { SearchProvider } from '@/lib/search-context';
-export default function SearchPage() {
+import { SearchProvider, useSearch } from '@/lib/search-context';
+import DocumentModal from '@/components/DocumentModal'; // Import DocumentModal
+import { AnimatePresence } from 'framer-motion'; // Import AnimatePresence
+
+// Component for the main page layout, excluding SearchProvider
+function PageLayout() {
+  const { query, isModalOpen } = useSearch(); // Get query and isModalOpen from context
+
   return (
-    <SearchProvider>
+    <>
       <AnimatedBackground />
-      <div className="bg-dark text-light rounded-b-[3rem] overflow-hidden relative">
+      {/* This div is the main hero container */}
+      <div className="rounded-b-[3rem] overflow-hidden relative">
         <TopNav />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-16 pb-20 text-center">
+        {/* This div is the content area within the hero */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-24 pt-24 pb-16 text-center">
           <HeroTitle />
           <HeroSearch />
         </div>
       </div>
-      <SearchContent />
+      {query && query.trim() !== '' && <SearchContent />}
+
+      <AnimatePresence>
+        {isModalOpen && <DocumentModal />}
+      </AnimatePresence>
+    </>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <SearchProvider>
+      <PageLayout />
     </SearchProvider>
   );
 }
